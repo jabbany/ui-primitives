@@ -1,0 +1,35 @@
+body {
+  font-family: sans-serif;
+}
+
+code {
+  font-family: monospace;
+}
+
+pre {
+  padding: 20px;
+  background-color: #ffe;
+  border: 1px solid #eed;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.main {
+  width: 1000px;
+  margin: auto;
+}
+
+.play-area {
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+}

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Examples for ui-primitives</title>
+    <link rel="stylesheet" href="css/layout.css"></link>
+
+    <link rel="stylesheet" href="../src/surface/css/surface.css"></link>
+
+    <!-- This must always be loaded -->
+    <script src="../src/common.js"></script>
+    <script src="../src/polyfill.js"></script>
+
+    <!-- Load ui components as needed -->
+    <script src="../src/surface/surface.js"></script>
+
+    <!-- Load business logic -->
+    <script src="js/surface-examples.js"></script>
+
+    <style>
+      #my-div-1 { width: 64px; height: 64px; background-color: #f00; }
+    </style>
+  </head>
+  <body>
+    <div class="main primitive-ui">
+      <h1>Surfaces</h1>
+      <section>
+        <h2>Introduction</h2>
+        <p>
+          Surfaces are <code>div</code> elements that surround other elements
+          and are designed to provide alignment onto a fixed coordinate.
+        </p>
+        <div id="demo-1" class="play-area">
+          <div id="my-div-1"></div>
+        </div>
+        <code>
+          <pre>var surface = new Surface(undefined, PrimitiveTools.$('#my-div-1'));
+surface.setMode('point');
+surface.top = 100;
+surface.left = 100;
+          </pre>
+        </code>
+      </section>
+    </div>
+  </body>
+</html>

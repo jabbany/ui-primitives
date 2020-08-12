@@ -1,0 +1,77 @@
+.primitive-ui .slider {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.primitive-ui .slider.shaded {
+  border-color: #333;
+}
+
+.primitive-ui .surface.horizontal > .slider.shaded {
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #333;
+}
+
+.primitive-ui .surface.vertical > .slider.shaded {
+  border-left: 1px solid #333;
+  border-right: 1px solid #333;
+}
+
+.primitive-ui .slider.circle {
+  border-radius: 50%;
+  border: 2px solid #333;
+}
+
+.primitive-ui .slider .handle.handle-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.primitive-ui .slider .handle.handle-arrow.handle-o-down {
+  left: -10px;
+  bottom: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 20px solid #000;
+}
+.primitive-ui .slider .handle.handle-arrow.handle-o-left {
+  left: 0;
+  top: -10px;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 20px solid #000;
+}
+.primitive-ui .slider .handle.handle-arrow.handle-o-right {
+  right: 0;
+  top: -10px;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 20px solid #000;
+}
+.primitive-ui .slider .handle.handle-arrow.handle-o-up {
+  left: -10px;
+  top: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 20px solid #000;
+}
+.primitive-ui .slider .handle.handle-arrow.handle-o-center {
+  left: -10px;
+  top: -10px;
+  width: 20px;
+  height: 20px;
+  background-color: #000;
+}
+.primitive-ui .slider .handle.handle-circle {
+  position: absolute;
+  left: -10px;
+  top: -10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #000;
+}

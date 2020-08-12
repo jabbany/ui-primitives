@@ -1,0 +1,54 @@
+.slider-space {
+  border: 1px dotted #000;
+}
+#slider-1, #slider-4, #slider-5, #slider-6, #slider-7a, #slider-8 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 600px;
+  height: 50px;
+}
+#slider-2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 300px;
+}
+#slider-3,  #slider-6b, #slider-7b {
+  width: 400px;
+  height: 400px;
+}
+
+.my-handle {
+  position: absolute;
+  top: -64px;
+  left: -32px;
+  width: 64px;
+  height: 64px;
+  user-select: none;
+  cursor: pointer;
+}
+
+.my-handle > .handle-tick {
+  position: absolute;
+  bottom: 0;
+  left: 22px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 20px solid #000;
+}
+
+.my-handle > .caption-text {
+  width: 100%;
+  background-color: #fff;
+  font-size: 12px;
+  border: 1px dotted #000;
+  text-align: center;
+}
+
+.my-handle > .caption-text:hover {
+  color: #00f;
+}

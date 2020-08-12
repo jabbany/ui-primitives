@@ -1,0 +1,29 @@
+{
+  "name": "ui-primitives",
+  "version": "0.1.0",
+  "description": "Unopinionated Primitive UI components for Vanilla JS Development",
+  "main": "src/common.js",
+  "directories": {
+    "doc": "docs",
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jabbany/ui-primitives.git"
+  },
+  "keywords": [
+    "ui",
+    "components",
+    "vanilla",
+    "umd"
+  ],
+  "author": "Jim Chen <knh.jabbany@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jabbany/ui-primitives/issues"
+  },
+  "homepage": "https://github.com/jabbany/ui-primitives#readme"
+}

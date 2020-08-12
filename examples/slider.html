@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Examples for ui-primitives</title>
+    <link rel="stylesheet" href="css/layout.css"></link>
+    <link rel="stylesheet" href="css/slider-demo.css"></link>
+
+    <link rel="stylesheet" href="../src/surface/css/surface.css"></link>
+    <link rel="stylesheet" href="../src/slider/css/slider.css"></link>
+
+    <!-- This must always be loaded -->
+    <script src="../src/common.js"></script>
+    <script src="../src/polyfill.js"></script>
+
+    <!-- Load ui components as needed -->
+    <script src="../src/surface/surface.js"></script>
+    <script src="../src/slider/slider.js"></script>
+
+    <!-- Load business logic -->
+    <script src="js/slider-examples.js"></script>
+  </head>
+  <body>
+    <div class="main primitive-ui">
+      <h1>Sliders</h1>
+      <section>
+        <h2>Introduction</h2>
+        <p>
+          Sliders are basic elements that allow two types of internal elements:
+          handles and marks. A slider is initialized by a <code>Surface</code>
+          which is used as the track. As such, the slider will automatically
+          inherit the surface's orientation constraints.
+        </p>
+        <p>
+          Below is an example of a common horizontal slider:
+        </p>
+        <div id="demo-1" class="play-area">
+          <div id="slider-1" class="slider-space"></div>
+        </div>
+        <p>Code:</p>
+        <code>
+          <pre>var surface = new Surface('horizontal');
+var slider = new Slider(surface);
+slider.trackClassName = 'shaded';
+slider.createHandle(Slider.basicHandle('arrow', 'down')).place(0.5);</pre>
+        </code>
+        <p>
+          As you can see, we first create a horizontal surface line (0 height)
+          and designate it as the track when creating the slider. This
+          automatically constrains the slider handle movement to be horizontal.
+        </p>
+      </section>
+      <section>
+        <h2>Vertical Sliders</h2>
+        <p>
+          Similar to horizontal sliders, vertical sliders arise when the slider
+          track is based on a vertical surface.
+        </p>
+        <div id="demo-2" class="play-area">
+          <div id="slider-2" class="slider-space"></div>
+        </div>
+        <code>
+          <pre>var surface = new Surface('vertical');
+var slider = new Slider(surface);
+slider.trackClassName = 'shaded';
+slider.createHandle(Slider.basicHandle('arrow', 'left')).place(0.5);</pre>
+        </code>
+        <p>
+          In this case the slider's handle(s) will be constrained to move
+          vertically.
+        </p>
+      </section>
+      <section>
+        <h2>2D Sliders</h2>
+        <p>
+          Finally, sliders can also be 2-dimensional when the track surface is
+          not constrained (a basic area surface).
+        </p>
+        <div id="demo-3" class="play-area">
+          <div id="slider-3" class="slider-space"></div>
+        </div>
+        <code>
+          <pre>var surface = new Surface();
+var slider = new Slider(surface);
+slider.createHandle(Slider.basicHandle('circle', 'uniform')).place(0.5);</pre>
+        </code>
+      </section>
+      <section>
+        <h2>Multiple Handles and Handle Styling</h2>
+        <p>
+          Sliders can have multiple handles that are independently controlled.
+        </p>
+        <p>
+          Below is an example of a common horizontal slider with two separate
+          handles (one pointing up and one pointing down):
+        </p>
+        <div id="demo-4" class="play-area">
+          <div id="slider-4" class="slider-space"></div>
+        </div>
+        <p>Code:</p>
+        <code>
+          <pre>var handle1 = slider.createHandle(Slider.basicHandle('arrow', 'down')).place(0.5);
+var handle2 = slider.createHandle(Slider.basicHandle('arrow', 'up')).place(0.8);</pre>
+        </code>
+        <p>
+          Actually, handles are just standard <code>div</code>s that are
+          mounted on a point surface, so you can customize them however you
+          like:
+        </p>
+        <div id="demo-5" class="play-area">
+          <div style="position: relative; height: 80px;">
+            <div class="surface point"
+              style="position: absolute; top: 64px; left: 32px;">
+              <div class="my-handle">
+                <div class="handle-tick"></div>
+                <div class="caption-text">Hey! This can be anything</div>
+              </div>
+            </div>
+          </div>
+          <div id="slider-5" class="slider-space"></div>
+        </div>
+        <code>
+          <pre>var customHandle = _('div', { className: 'my-handle'}, [
+  _('div', { className: 'handle-tick' }),
+  _('div', { className: 'caption-text'}, [_('', 'Hey! This can be anything')])
+]);
+slider.createHandle(customHandle).place(0.6);</pre>
+        </code>
+      </section>
+      <section>
+        <h2>Programmable Constraints</h2>
+        <p>
+          Constraints can be implemented on handles to create all kinds of
+          functionality. This is done by overloading the <code>_place</code>
+          method of a handle:
+        </p>
+        <div id="demo-6" class="play-area">
+          <div id="slider-6" class="slider-space"></div>
+        </div>
+        <code>
+          <pre>var discreteTicks = [0.1, 0.3, 0.4, 0.6, 0.9, 1.0];
+var handle = slider.createHandle(Slider.basicHandle('arrow', 'down')).place(0.5);
+var oldPlace = handle._place;
+handle._place = function (x, y) {
+  var newX = discreteTicks.reduce(function (acc, cur) {
+    return (acc == null || Math.abs(x - cur) &lt; Math.abs(x - acc) ) ?
+      cur : acc;
+  }, null);
+  oldPlace.apply(this, [newX, y]);
+}</pre>
+        </code>
+        <p>
+          This is a very old-school way of doing method inheritance since our
+          examples are based on ES5. However, there's nothing stopping you from
+          extending the base <code>SliderHandle</code> class if you opt for a
+          more modern language variant (e.g. TypeScript).
+        </p>
+        <p>
+          Programmable constraints are a very rich set of tools for controlling
+          sliders. For example, with multiple slider handles, one can write
+          constraints that modify handle behavior relative to the other handles!
+        </p>
+        <div id="demo-6b" class="play-area">
+          <div id="slider-6b" class="slider-space"></div>
+        </div>
+        <p>
+          The example above is a 2D area-slider with 2 handles. The outer
+          handle is constrained to move within a circle while the inner handle
+          is constrained by the outer handle. Neither of these constraints are
+          built into the slider primitive and yet they can be easily
+          implemented as a programmable constraint! We will leave the
+          implementation details as an exercise to the reader (hint: look at
+          the source!).
+        </p>
+      </section>
+      <section>
+        <h2>Reading handle Value</h2>
+        <p>
+          Values can be read from a handle through its <code>.value()</code>
+          method. Depending on the slider type, it will return a single number
+          or an object containing <code>.x</code> and <code>.y</code> for the
+          corresponding horizontal and vertical values:
+        </p>
+        <div id="demo-7" class="play-area">
+          <div id="slider-7a" class="slider-space"></div>
+          <div id="slider-7a-value">-</div>
+
+          <div id="slider-7b" class="slider-space"></div>
+          <div id="slider-7b-value">-</div>
+        </div>
+        <code>
+          <pre>handle.addEventListener('move', function () {
+  $('#slider-7-value').innerText = Math.round(this.value() * 1000) / 1000;
+});</pre>
+        </code>
+        <p>
+          Remember that the resolution of the value depends on how much area is
+          available to the slider: longer tracks will give you higher
+          resolution for the value.
+        </p>
+      </section>
+      <section>
+        <h2>Static marks and Track Styling</h2>
+        <p>
+          You may have noticed that in examples above, we have set the property
+          <code>.trackClassName</code> on a slider. This is a primitive example
+          of track styling. By default, the track is a <code>div</code> that
+          is assumed to span the entire width and height of the slider's backing
+          <code>Surface</code> and is where handles and marks are placed.
+          You are able to do some basic styling to it, though be aware that
+          setting certain styles (such as width/height) will break a slider's
+          functionality.
+        </p>
+        <p>
+          Here is what a slider looks like without track styling. Notice that
+          you won't see any track!
+        </p>
+        <div id="demo-8" class="play-area">
+          <div id="slider-8" class="slider-space"></div>
+        </div>
+        <code>
+          <pre></pre>
+        </code>
+        <p>
+          Remember that the resolution of the value depends on how much area is
+          available to the slider: longer tracks will give you higher
+          resolution for the value.
+        </p>
+      </section>
+    </div>
+  </body>
+</html>
