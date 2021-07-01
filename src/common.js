@@ -15,7 +15,7 @@
   var PrimitiveTools = function () {};
 
   // The DFC.js derivative
-  PrimitiveTools.prototype._ = function (type, props, children, callback) {
+  PrimitiveTools.prototype._ = function _(type, props, children, callback) {
     // Initialize the element
     var elem = null;
     if (type instanceof Element || type instanceof HTMLDocument) {
@@ -68,7 +68,7 @@
   };
 
   // The "uni-selector"
-  PrimitiveTools.prototype.$ = function (selector) {
+  PrimitiveTools.prototype.$ = function $(selector) {
     if (typeof selector !== 'string') {
       return selector; // Return any non-string items straight back
     }
@@ -83,7 +83,7 @@
   };
 
   // Infer css values in JS
-  PrimitiveTools.prototype._css = function (value) {
+  PrimitiveTools.prototype._css = function _css(value) {
     if (typeof value === 'number') {
       if (value >= 1) {
         return value + 'px';
@@ -96,7 +96,13 @@
   };
 
   // Class toggler
-  PrimitiveTools.prototype._toggleClass = function (dom, className, mode) {
+  PrimitiveTools.prototype._toggleClass = function _t(dom, className, mode) {
+    if (typeof NodeList !== 'undefined' && (dom instanceof NodeList)) {
+      for (var i = 0; i < dom.length; i++) {
+        _t(dom[i], className, mode);
+      }
+      return dom;
+    }
     var classes = dom.className.split(' ');
     var index = classes.indexOf(className);
     if (mode === true) {
@@ -116,6 +122,7 @@
         this._toggleClass(dom, className, false);
       }
     }
+    return dom;
   }
 
   exports.PrimitiveTools = new PrimitiveTools();

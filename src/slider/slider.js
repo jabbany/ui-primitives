@@ -101,6 +101,9 @@
     this._listeners[event].push(listener);
   }
 
+  SliderHandle.prototype.clearEventListeners = function (event) {
+    this._listeners[event] = [];
+  }
 
   SliderHandle.prototype.value = function () {
     if (this._parent._mode === 'horizontal') {
@@ -117,30 +120,44 @@
     }
   }
 
+  SliderHandle.prototype.toString = function () {
+    return '[SliderHandle] ' + JSON.stringify(this.value());
+  }
+
   function SliderMark (parent, inner, mode) {
     this._parent = parent;
     if (typeof mode === 'undefined' || mode === null) {
       mode = this._parent._mode;
-      console.log(mode);
     } else if (mode !== 'point' && mode !== this._parent._mode) {
       throw new Error('Slider marks must either be points or have the same' +
         ' mode as the parent slider');
     }
     this._surface = new Surface(mode, inner);
     this._surface.absolute = true;
+
+    this._location = {
+      x1: null,
+      x2: null,
+      y1: null,
+      y2: null
+    }
   }
 
   SliderMark.prototype._place = function (x1, y1, x2, y2) {
     if (typeof x1 === 'number') {
+      this._location.x1 = x1;
       this._surface.left = x1 * 100 + '%';
     }
     if (typeof y1 === 'number') {
+      this._location.y1 = y1;
       this._surface.top = y1 * 100 + '%';
     }
     if (typeof x2 === 'number') {
+      this._location.x2 = x2;
       this._surface.right = (1 - x2) * 100 + '%';
     }
     if (typeof y2 === 'number') {
+      this._location.y2 = y2;
       this._surface.bottom = (1 - y2) * 100 + '%';
     }
   }
@@ -150,7 +167,24 @@
       if (typeof endBound !== 'undefined' && endBound !== null) {
         throw new Error('Point marks cannot have end-bounds set!');
       }
-      this._place(startBound.x, startBound.y);
+      if (this._parent._mode === '') {
+        if (typeof startBound !== 'object' ||
+          !('x' in startBound) ||
+          !('y' in startBound)) {
+          throw new Error('Point marker on area expects X,Y coordinates.');
+        }
+        this._place(startBound.x, startBound.y);
+      } else if (this._parent._mode === 'horizontal') {
+        if (typeof startBound !== 'number') {
+          throw new Error('Point marker on horizontal area expects numeric.');
+        }
+        this._place(startBound);
+      } else if (this._parent._mode === 'vertical') {
+        if (typeof startBound !== 'number') {
+          throw new Error('Point marker on vertical area expects numeric.');
+        }
+        this._place(null, startBound)
+      }
     } else if (this._surface._mode === 'horizontal') {
       if (typeof startBound !== 'number' && typeof endBound !== 'number') {
         throw new Error('Start/end bounds must be numeric and both defined!');
@@ -179,6 +213,31 @@
       this._surface._dom.remove();
     } catch (e) {}
     return this;
+  }
+
+  SliderMark.prototype.location = function () {
+    if (this._surface._mode === 'point') {
+      if (this._parent._mode === '') {
+        return {x: this._location.x1, y: this._location.y1};
+      } else if (this._parent._mode === 'horizontal') {
+        return this._location.x1;
+      } else if (this._parent._mode === 'vertical') {
+        return this._location.y1;
+      }
+    } else if (this._surface._mode === 'horizontal') {
+      return {start: this._location.x1, end: this._location.x2};
+    } else if (this._surface._mode === 'vertical') {
+      return {start: this._location.y1, end: this._location.y2};
+    } else {
+      return {
+        start: {x: this._location.x1, y: this._location.y1},
+        end: {x: this._location.x2, y: this._location.y2}
+      };
+    }
+  }
+
+  SliderMark.prototype.toString = function () {
+    return '[SliderMark] ' + JSON.stringify(this.location());
   }
 
   function Slider(surface) {
@@ -281,6 +340,8 @@
     } else {
       item += '[Point Slider]';
     }
+    item += ' ' + this._surface;
+    return item;
   };
 
   exports.Slider = Slider;

@@ -5,23 +5,17 @@
   padding: 0;
 }
 
+.primitive-ui .surface.absolute,
 .primitive-ui .surface > * {
   position: absolute;
 }
 
-.primitive-ui .surface.absolute {
-  position: absolute;
-}
-
+.primitive-ui .surface.point,
 .primitive-ui .surface.horizontal {
   height: 0;
 }
 
+.primitive-ui .surface.point,
 .primitive-ui .surface.vertical {
-  width: 0;
-}
-
-.primitive-ui .surface.point {
-  height: 0;
   width: 0;
 }

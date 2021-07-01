@@ -1,0 +1,19 @@
+.icon-block {
+  width: 64px;
+  height: 64px;
+  background-color: #f00;
+}
+
+.tracking-area {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border: 1px solid #000;
+  background-color: #ff0;
+}
+
+
+#demo-1, #demo-2 {
+  height: 100px;
+}

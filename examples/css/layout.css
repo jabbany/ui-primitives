@@ -29,6 +29,7 @@ a:hover {
 }
 
 .play-area {
+  position: relative;
   padding: 10px;
   border: 1px solid #ddd;
   background-color: #fff;

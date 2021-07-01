@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Examples for ui-primitives</title>
     <link rel="stylesheet" href="css/layout.css"></link>
+    <link rel="stylesheet" href="css/surface-demo.css"></link>
 
     <link rel="stylesheet" href="../src/surface/css/surface.css"></link>
 
@@ -17,10 +18,6 @@
 
     <!-- Load business logic -->
     <script src="js/surface-examples.js"></script>
-
-    <style>
-      #my-div-1 { width: 64px; height: 64px; background-color: #f00; }
-    </style>
   </head>
   <body>
     <div class="main primitive-ui">
@@ -32,13 +29,36 @@
           and are designed to provide alignment onto a fixed coordinate.
         </p>
         <div id="demo-1" class="play-area">
-          <div id="my-div-1"></div>
+          <div id="my-div-1" class="icon-block"></div>
         </div>
         <code>
           <pre>var surface = new Surface(undefined, PrimitiveTools.$('#my-div-1'));
 surface.setMode('point');
-surface.top = 100;
-surface.left = 100;
+surface.top = 10;
+surface.left = 200;
+          </pre>
+        </code>
+      </section>
+      <section>
+        <h2>Types of Surfaces</h2>
+        <p>
+          There are four (4) types of surfaces: point, vertical, horizontal,
+          area (default). Point surfaces only have a position with no width
+          or height. Vertical surfaces only have height while horizontal ones
+          only have width. Area surfaces (the default), allow you to specify
+          both width and height in addition to position.
+        </p>
+        <div id="demo-2" class="play-area">
+          <div id="demo-2-p" class="tracking-area"></div>
+          <div id="demo-2-h" class="tracking-area"></div>
+          <div id="demo-2-v" class="tracking-area"></div>
+          <div id="demo-2-a" class="tracking-area"></div>
+        </div>
+        <code>
+          <pre>var surface = new Surface(undefined, PrimitiveTools.$('#my-div-1'));
+surface.setMode('point');
+surface.top = 10;
+surface.left = 200;
           </pre>
         </code>
       </section>
